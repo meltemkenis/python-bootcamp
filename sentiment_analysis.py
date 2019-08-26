@@ -1,13 +1,14 @@
 # Meltem Keniş
-# Ağustos 2019 - Kodluyoruz Akademi "Python ve Makine Öğrenmesi" bitirme projesi
+# August 2019 - "Python and Machine Learning" project
 # Sentiment Analysis of Global Warming Using Twitter
 
-## Twitter'dan Veri Çekmek:
+## Data retrieval from Twitter:
 
 from warnings import filterwarnings
 filterwarnings('ignore')
 
-# Twitter API'sine girmek için gereken key ve token'lar:
+# Key and tokens which are necessary to enter Twitter API:
+
 import tweepy, codecs
 
 consumer_key = 'XXX'
@@ -20,13 +21,13 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 
 
-# Veri çekeceğimiz hashtag'in adını, dilini belirtiyoruz. Çekeceğimiz tweetler popular mi olsun, güncel mi olsun, 
-# karma mı olsun seçeneklerinden karma'yı (mix) seçiyoruz. Count'u 1000 ayarladık ama api limiti olduğu için kaç gelir
-# bilmiyoruz:
+# We specify the features of the data that we will extract from Twitter:
+
 tweetler = api.search(q = "#globalwarming", lang = "en", result_type = "mix", count = 1000)
 
 
-# globalwarming hashtagindeki tweet'lerin hangi özellikleri içereceğini belirtiyoruz:
+#  We specify the features of the tweets with globalwarming hashtag:
+
 import pandas as pd
 
 def hashtag_df(tweetler):
@@ -45,26 +46,26 @@ def hashtag_df(tweetler):
     return df
 
 
-# globalwarming hashtag'i ile atılan tweet'leri dataframe'e çevirmek:
+# Converting tweets with globalwarming hashtag to a dataframe:
 df = hashtag_df(tweetler)
 
 
-# dataframe'i csv olarak kaydetme
+# Saving dataframe as csv file.
 df.to_csv("data_twitter.csv")
 
 
 ## Text Mining:
 
 
-# büyük-küçük harf dönüşümü
+# Case conversion:
 df['text'] = df['text'].apply(lambda x: " ".join(x.lower() for x in x.split()))
 
-# sayıları, noktalama işaretlerini, 'rt' ifadesini kaldırma:
+# removing numbers, punctuations and 'rt' expressions:
 df['text'] = df['text'].str.replace('[^\w\s]','')
 df['text'] = df['text'].str.replace('rt','')
 df['text'] = df['text'].str.replace('\d','')
 
-# stopwords (I, me, myself, he, she, they, our, mine, you, yours) ifadelerini kaldırma:
+# removing stopwords (I, me, myself, he, she, they, our, mine, you, yours):
 import nltk
 nltk.download('stopwords')
 from nltk.corpus import stopwords
@@ -79,7 +80,7 @@ nltk.download('wordnet')
 df['text'] = df['text'].apply(lambda x: " ".join([Word(word).lemmatize() for word in x.split()])) 
 
 
-## Word Cloud Oluşturma:
+## Creating Word Cloud:
 
 get_ipython().system('pip install WordCloud')
 
@@ -100,33 +101,7 @@ plt.tight_layout(pad = 0)
 plt.show()
 
 
-## Sentiment Analizi:
-
-get_ipython().system('pip install vaderSentiment')
-
-
-# Sentiment analizi için hazır kütüphaneler kullanıyoruz. Burada bazı kelimelerin skorları var. Mesela "bad" 
-# kelimesinin skoru -5 iken, "good" kelimesinin skoru +4. 
-# Biz bir cümle veya kelime sorduğumuzda da bu skorlara göre kelime skoru veya cümlenin toplam skoru veriliyor.
-
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-analyser = SentimentIntensityAnalyzer()
-
-# Çıktıdaki compound cümlenin/kelimenin genel olarak pozitif mi negatif mi olduğunu söylüyor bize. 
-# Bu arada aynı cümleyi ünlem işaretini artırarak yazdığımızda cümlenin negativitesinin arttığını görebiliriz.
-
-analyser.polarity_scores("Let me form a bad sentence.")
-
-analyser.polarity_scores("Let me form a bad sentence.")
-
-analyser.polarity_scores("Let me form a bad sentence!")
-
-analyser.polarity_scores("Let me form a bad sentence!!")
-
-analyser.polarity_scores("Let me form a BAD sentence.")
-
-analyser.polarity_scores("Let me form a bad sentence!!!")
-
+## Sentiment Analysis:
 
 from textblob import TextBlob
 def sentiment_skorla(df):
