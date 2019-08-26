@@ -60,21 +60,21 @@ df.to_csv("data_twitter.csv")
 # Case conversion:
 df['text'] = df['text'].apply(lambda x: " ".join(x.lower() for x in x.split()))
 
-# removing numbers, punctuations and 'rt' expressions:
+# Removing numbers, punctuations and 'rt' expressions:
 df['text'] = df['text'].str.replace('[^\w\s]','')
 df['text'] = df['text'].str.replace('rt','')
 df['text'] = df['text'].str.replace('\d','')
 
-# removing stopwords (I, me, myself, he, she, they, our, mine, you, yours):
+# Removing stopwords (I, me, myself, he, she, they, our, mine, you, yours):
 import nltk
 nltk.download('stopwords')
 from nltk.corpus import stopwords
 sw = stopwords.words('english')
 df['text'] = df['text'].apply(lambda x: " ".join(x for x in x.split() if x not in sw))
 
-
 get_ipython().system('pip install textblob')
-# lemmi
+
+# Lemmi
 from textblob import Word
 nltk.download('wordnet')
 df['text'] = df['text'].apply(lambda x: " ".join([Word(word).lemmatize() for word in x.split()])) 
@@ -92,7 +92,6 @@ from wordcloud import WordCloud
 
 
 text = " ".join(i for i in df.text)
-
 
 wordcloud = WordCloud(background_color = "white").generate(text)
 plt.imshow(wordcloud, interpolation = "bilinear")
