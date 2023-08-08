@@ -24,16 +24,16 @@ The currency.py file showcases web scraping using BeautifulSoup and requests lib
 
 To run the code in this repository, you will need the following libraries installed:
 
-`pandas`
-`tweepy` (for web scraping)
-`nltk` (for text mining)
-`textblob` (for sentiment analysis)
-`numpy` (for matrix operations)
-`matplotlib` (for data visualization)
-`seaborn` (for data visualization)
-`scikit-learn` (for KMeans clustering)
-`BeautifulSoup` (for web scraping)
-`requests` (for web scraping)
+- `pandas`
+- `tweepy` (for web scraping)
+- `nltk` (for text mining)
+- `textblob` (for sentiment analysis)
+- `numpy` (for matrix operations)
+- `matplotlib` (for data visualization)
+- `seaborn` (for data visualization)
+- `scikit-learn` (for KMeans clustering)
+- `BeautifulSoup` (for web scraping)
+- `requests` (for web scraping)
 
 ## How to Use
 
