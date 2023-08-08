@@ -20,13 +20,13 @@ df2 = pd.read_html(str(r), thousands=', ')[1]
 df2
 
 frames = [df1, df2]
-result = pd.concat(frames, ignore_index=True) #tablo information index düzeltimi
+result = pd.concat(frames, ignore_index=True)
 result
 
 df = pd.DataFrame({
-'x': result['Alış'],
-'y': result['Satış'],
-'group': result['Banka']
+'x': result['Purchase'],
+'y': result['Sale'],
+'group': result['Bank']
 })
  
 p = sns.regplot(data=df, x="x", y="y", fit_reg=False, marker="^", color="purple")
