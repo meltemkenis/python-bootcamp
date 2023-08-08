@@ -18,7 +18,7 @@ The k-means.py file demonstrates data clustering using KMeans from the scikit-le
 
 - File: currency.py
 
-The currency.py file showcases web scraping using BeautifulSoup and requests libraries to extract currency exchange rate data for Turkish Lira (TL) from a website. The extracted data is then visualized using pandas, matplotlib, and seaborn libraries, showing the buying and selling rates of GBP from various banks.
+The currency.py file showcases web scraping using BeautifulSoup and requests libraries to extract currency exchange rate data for Sterling (GBP) from a website. The extracted data is then visualized using pandas, matplotlib, and seaborn libraries, showing the buying and selling rates of GBP from various banks.
 
 # Requirements
 
